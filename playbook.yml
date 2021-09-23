@@ -1,0 +1,44 @@
+---
+#- hosts: load_balancing
+#  become: yes
+#  tasks:
+#    - name: Ensure nano is installed.
+#      apt: name=nano state=present
+#    - name: Ensure nginx is installed.
+#      apt: name=nginx state=present
+#     - name: Template a file to /etc/file.conf
+#       ansible.builtin.template:
+#         src: ./templates/load-balancing
+#         dest: /etc/file.conf
+#         owner: bin
+#         group: wheel
+#         mode: '0644'
+- hosts: web
+  become: yes
+  tasks:
+#    - name: Ensure nano is installed.
+#      apt: name=nano state=present
+#    - name: Ensure nginx is installed.
+#      apt: name=nginx state=present
+#    - name: Ensure php is installed.
+#      apt: name=php state=present
+#    - name: Ensure php-fpm is installed.
+#      apt: name=php7.2-fpm state=present
+    - name: Ensure php-fpm is started and enabled.
+      service: name=php7.2-fpm state=started enabled=yes use=sysvinit
+    - name: Ensure nginx is started and enabled.
+      service: name=nginx state=started enabled=yes
+    - name: Write nginx config.
+      template:
+        src: ./files/web.nginx
+        dest: /etc/nginx/sites-available/default
+      notify:
+        - Restart nginx
+    - name: Write nginx config.
+      template:
+        src: ./files/web.php
+        dest: /var/www/html/index.php
+  handlers:
+    - name: Restart nginx
+      service: name=nginx state=restarted
+   
