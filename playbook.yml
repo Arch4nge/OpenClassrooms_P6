@@ -10,9 +10,6 @@
       ansible.builtin.template:
          src: ./templates/load-balancing
          dest: /etc/nginx/sites-enabled/default
-#         owner: bin
-#         group: wheel
-#         mode: '0644'
       notify:
         - Restart nginx
     - name: Ensure nginx is started and enabled.
