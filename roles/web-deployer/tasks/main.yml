@@ -1,0 +1,25 @@
+---
+# tasks file for roles/web-deployer
+tasks:
+    - name: Ensure nano is installed.
+      apt: name=nano state=present
+    - name: Ensure nginx is installed.
+      apt: name=nginx state=present
+    - name: Ensure php is installed.
+      apt: name=php state=present
+    - name: Ensure php-fpm is installed.
+      apt: name=php7.2-fpm state=present
+    - name: Ensure php-fpm is started and enabled.
+      service: name=php7.2-fpm state=started enabled=yes use=sysvinit
+    - name: Ensure nginx is started and enabled.
+      service: name=nginx state=started enabled=yes
+    - name: Write nginx config.
+      copy:
+        src: web.nginx
+        dest: /etc/nginx/sites-available/default
+      notify:
+        - Restart nginx
+    - name: Write nginx config.
+      copy:
+        src: web.php
+        dest: /var/www/html/index.php
