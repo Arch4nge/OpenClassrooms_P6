@@ -1,23 +1,9 @@
 ---
 - hosts: load_balancing
-  become: yes
-  tasks:
-    - name: Ensure nano is installed.
-      apt: name=nano state=present
-    - name: Ensure nginx is installed.
-      apt: name=nginx state=present
-    - name: Template a file to /etc/file.conf
-      ansible.builtin.template:
-         src: ./templates/load-balancing
-         dest: /etc/nginx/sites-enabled/default
-      notify:
-        - Restart nginx
-    - name: Ensure nginx is started and enabled.
-      service: name=nginx state=started enabled=yes
-  handlers:
-    - name: Restart nginx
-      service: name=nginx state=restarted
+become: yes
+roles:
+  - load-balancer
 - hosts: web
-  become: yes
-  - roles:
-    - web-deployer 
+become: yes
+- roles:
+  - web-deployer 
