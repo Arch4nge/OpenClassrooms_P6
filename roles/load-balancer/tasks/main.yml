@@ -6,7 +6,7 @@
   apt: name=nginx state=present
 - name: Template a file to /etc/file.conf
   ansible.builtin.template:
-    src: ./templates/load-balancing
+    src: load-balancing
     dest: /etc/nginx/sites-enabled/default
   notify:
     - Restart nginx
