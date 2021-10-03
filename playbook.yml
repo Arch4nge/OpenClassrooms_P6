@@ -1,9 +1,11 @@
 ---
 - hosts: load_balancing
-become: yes
-roles:
-  - load-balancer
+  become: true
+  roles:
+    - load-balancer
 - hosts: web
-become: yes
-- roles:
-  - web-deployer 
+  become: true
+  roles:
+    - role: web-deployer
+#      repo: 'https://github.com/banago/simple-php-website.git'
+      repo: 'https://github.com/KamranAzeem/simple-php-website.git'
