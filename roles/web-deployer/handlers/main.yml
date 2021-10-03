@@ -1,5 +1,5 @@
 ---
 # handlers file for roles/web-deployer
-handlers:
+
   - name: Restart nginx
     service: name=nginx state=restarted
