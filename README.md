@@ -3,17 +3,14 @@ A docker powered lab with ansible automation for a load-balanced basic web app.
 
 
 # How tu run the lab ?
-Simply run `docker-compose up -d`
-Then execute `ansible-playbook playbook.yml -i inventory` in the main directory.
+Simply run clone the repo and specify :
+- The repo of your php web project repository in playbook.yml
+- Your infrasture machines addresses in the inventory file
 
 
 # Customisation of the lab
-You can change docker options in the docker-compose.yml file
-(example change how many web server are running)
+You can changes everything you want in configs files.
 
-If you add more or less docker containers you have to specify them in the inventory file of ansible in [web] part.
+To change web-deployer role go in "role/web-deployer" folder
 
-You can also change actions executed on theses containers in the playbook.yml file.
-
-Web app configuration is in files dir.
-Load-balancing configuration is in templates dir.
+To change load-balancing role go in "role/load-balancing" folder
